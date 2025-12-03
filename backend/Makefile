@@ -17,6 +17,7 @@ lint:
 
 format:
 	npx prisma format
+	npx tsfmt -r app/**/*.ts prisma/connection.ts proxy.ts prisma.config.ts
 	
 generate:
 	npx prisma generate

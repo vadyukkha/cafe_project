@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
 export const createOrderSchema = z.object({
-  items: z.array(z.object({
-    productId: z.string(),
-    quantity: z.number().min(1),
-    price: z.string().regex(/^\d+(\.\d+)?$/, "Invalid decimal number"),
-  })),
+	items: z.array(z.object({
+		productId: z.string(),
+		quantity: z.number().min(1),
+		price: z.string().regex(/^\d+(\.\d+)?$/, "Invalid decimal number"),
+	})),
 })
 
 // a = {
