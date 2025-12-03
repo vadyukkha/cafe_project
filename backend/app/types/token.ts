@@ -1,7 +1,9 @@
+import { Role } from "../enums/role"
+
 export type JwtPayload = {
 	id: string
 	email: string
-	role: 'USER' | 'ADMIN'
+	role: Role.USER | Role.ADMIN
 	iat?: number
 	exp?: number
 }
