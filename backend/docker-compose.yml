@@ -1,0 +1,9 @@
+services:
+  db:
+    container_name: 'backend_postgres'
+    image: 'postgres:14'
+    restart: always
+    env_file:
+      - ./.docker.env
+    ports:
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
