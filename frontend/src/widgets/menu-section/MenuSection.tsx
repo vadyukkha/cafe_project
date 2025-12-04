@@ -8,7 +8,7 @@ interface Props {
 export function MenuSection({ products }: Props) {
   return (
     <section className="space-y-8 py-4">
-      <h1 className="text-3xl font-bold">Наш кофе</h1>
+      <h1 className="text-3xl font-bold" style={{ marginLeft: '20px' }}>Наш кофе</h1>
 
       <ProductList products={products} />
     </section>
