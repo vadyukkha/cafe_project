@@ -15,3 +15,4 @@ export const LoadingState: React.FC = () => (
       <p className="text-gray-500">Нет доступных видов кофе</p>
     </div>
   );
+  
