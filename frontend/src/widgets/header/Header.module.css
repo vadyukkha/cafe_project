@@ -55,6 +55,10 @@
 
   transition: all 0.2s ease;
 }
+.cartButton:hover {
+  background: #000;
+  color: #fff;
+}
 
 .authButton {
   padding: 8px 18px;
