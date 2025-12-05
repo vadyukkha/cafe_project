@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Product } from "../model/types";
 import coffeeImage from "@/public/coffee.png";
 
