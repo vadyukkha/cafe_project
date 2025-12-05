@@ -6,14 +6,14 @@ import { useRouter } from "next/navigation";
 import { RootState } from "@/src/shared/store/store";
 import { fetchMe } from "@/src/entities/auth/lib/api";
 import { UserProfile } from "@/src/entities/auth/ui/UserProfile";
-import { UserResponse } from "@/src/entities/auth/model/types";
+import { User } from "@/src/entities/auth/model/types";
 
 export default function MePage() {
     const router = useRouter();
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const token = useSelector((state: RootState) => state.auth.accessToken) as string;
 
-    const [user, setUser] = useState<UserResponse | null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
