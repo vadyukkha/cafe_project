@@ -1,25 +1,27 @@
 import "./globals.css";
-import type { Metadata } from "next";
-import { Header } from "@/src/widgets/header/Header";
-import { Footer } from "@/src/widgets/footer/Footer";
+import { StoreProvider } from "../shared/store/providers/StoreProvider";
+import { Header } from "../widgets/header/Header";
+import { Footer } from "../widgets/footer/Footer";
+import { cookies } from "next/headers";
 
-export const metadata: Metadata = {
-    title: "Coffee Shop",
-    description: "Simple coffee shop application built with Next.js",
-};
-
-export default function RootLayout({
-    children,
+export default async function RootLayout({
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    return (
-        <html lang="ru">
-            <body>
-                <Header />
-                <main className="container">{children}</main>
-                <Footer />
-            </body>
-        </html>
-    );
+  const cookieStore = await cookies();
+  const authToken = cookieStore.get("auth_token");
+  const isAuthenticated = !!authToken;
+
+  return (
+    <html lang="ru">
+      <body>
+        <StoreProvider initialAuth={isAuthenticated}>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </StoreProvider>
+      </body>
+    </html>
+  );
 }

@@ -1,23 +1,21 @@
-import "./home.css";
-import Link from "next/link";
+import styles from './page.module.css';
+import Link from 'next/link';
 
 export default function HomePage() {
     return (
         <>
-            {/* Hero Section */}
-            <section className="hero">
-                <div className="hero__content">
+            <section className={styles.hero}>
+                <div className={styles.hero__content}>
                     <h1>Добро пожаловать в CKYФАTORR</h1>
                     <p>Свежий кофе, тёплая атмосфера и лучшие десерты в городе.</p>
 
-                    <Link href="/menu" className="hero__button">
+                    <Link href="/menu" className={styles.hero__button}>
                         Посмотреть меню
                     </Link>
                 </div>
             </section>
 
-            {/* About Section */}
-            <section className="about">
+            <section className={styles.about}>
                 <h2>О нас</h2>
                 <p>
                     Мы верим, что кофе — это больше, чем напиток. Это маленький

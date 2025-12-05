@@ -1,9 +1,13 @@
 "use client";
 
+import { useSelector } from "react-redux";
 import Link from "next/link";
-import styles from "./Header.module.css";
+import styles from "./Header.module.css"
 
 export function Header() {
+  const accessToken = useSelector((state: any) => state.auth.accessToken);
+  const isAuthenticated = !!accessToken;
+
   return (
     <header className={styles.header}>
       <div className={styles.left}>
@@ -21,10 +25,12 @@ export function Header() {
           Корзина
         </Link>
 
-        <Link href="/auth" className={styles.authButton}>
-          Войти
-        </Link>
+        {isAuthenticated ? (
+          <Link href="/me" className={styles.authButton}>Профиль</Link>
+        ) : (
+          <Link href="/login" className={styles.authButton}>Войти</Link>
+        )}
       </div>
     </header>
   );
-};
+}
