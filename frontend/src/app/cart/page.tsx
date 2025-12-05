@@ -24,7 +24,6 @@ export default function CartPage() {
 
     const [mounted, setMounted] = useState(false);
 
-    // Загружаем корзину из localStorage только на клиенте
     useEffect(() => {
         setMounted(true);
 
@@ -34,10 +33,8 @@ export default function CartPage() {
         }
     }, [dispatch]);
 
-    // Ждём гидрацию
     if (!mounted) return null;
 
-    // Если не авторизован
     if (!isAuthenticated) {
         return (
             <div className={styles.container}>
@@ -52,7 +49,6 @@ export default function CartPage() {
         );
     }
 
-    // Если корзина пуста
     if (items.length === 0) {
         return (
             <div className={styles.container}>
@@ -84,13 +80,18 @@ export default function CartPage() {
                     {items.map((item) => (
                         <div key={item.id} className={styles.cartItem}>
                             <div className={styles.itemImage}>
-                                <Image
-                                    src={coffeePNG}
-                                    alt={item.name}
-                                    width={100}
-                                    height={100}
-                                    style={{ objectFit: "cover" }}
-                                />
+                                <div className={styles.imageWrapper}>
+                                    <Image
+                                        src={coffeePNG}
+                                        alt={item.name}
+                                        fill
+                                        sizes="(max-width: 768px) 100px, 100px"
+                                        style={{ 
+                                            objectFit: "contain"
+                                        }}
+                                        className={styles.image}
+                                    />
+                                </div>
                             </div>
 
                             <div className={styles.itemInfo}>
@@ -120,7 +121,7 @@ export default function CartPage() {
                                     {item.price} ₽ × {item.quantity}
                                 </div>
                                 <div className={styles.totalItemPrice}>
-                                    {item.price * item.quantity} ₽
+                                    {(item.price * item.quantity).toFixed(2)} ₽
                                 </div>
                             </div>
 
@@ -138,7 +139,7 @@ export default function CartPage() {
                     <h2>Итого</h2>
                     <div className={styles.summaryRow}>
                         <span>Товары ({totalItems} шт.)</span>
-                        <span>{totalPrice} ₽</span>
+                        <span>{totalPrice.toFixed(2)} ₽</span>
                     </div>
                     <div className={styles.summaryRow}>
                         <span>Доставка</span>
@@ -146,7 +147,7 @@ export default function CartPage() {
                     </div>
                     <div className={styles.totalRow}>
                         <span>Общая сумма</span>
-                        <span className={styles.totalPrice}>{totalPrice} ₽</span>
+                        <span className={styles.totalPrice}>{totalPrice.toFixed(2)} ₽</span>
                     </div>
 
                     <button className={styles.checkoutButton}>

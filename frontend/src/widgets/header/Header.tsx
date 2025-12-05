@@ -32,7 +32,7 @@ export function Header() {
                 <Link href="/cart" className={styles.cartButton}>
                     Корзина
                     {cartTotalItems > 0 && (
-                        <span className={styles.cartBadge}>{cartTotalItems}</span>
+                        <span className={styles.cartBadge}></span>
                     )}
                 </Link>
 
