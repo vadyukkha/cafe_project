@@ -9,10 +9,9 @@ interface Props {
 
 export function ProductCard({ product }: Props) {
     return (
-        <Link
+        <div>
             href={`/product/${product.id}`}
             className="block border rounded-xl p-4 shadow-sm hover:shadow-md transition cursor-pointer"
-        >
             <Image
                 src={coffeeImage}
                 alt={product.name}
@@ -26,7 +25,6 @@ export function ProductCard({ product }: Props) {
             <p className="text-sm text-neutral-500">{product.description}</p>
 
             <div className="mt-4 font-bold text-xl">{product.price} ₽</div>
-        </Link>
-
+        </div>
     );
 }

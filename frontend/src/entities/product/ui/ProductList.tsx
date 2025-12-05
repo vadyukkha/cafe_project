@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Product } from "../model/types";
 import styles from "./ProductList.module.css";
 import coffeePNG from "@/public/coffee.png";
@@ -11,7 +12,11 @@ export function ProductList({ products }: Props) {
     return (
         <div className={styles.grid}>
             {products.map((product) => (
-                <div key={product.id} className={styles.card}>
+                <Link 
+                    href={`/product/${product.id}`} 
+                    key={product.id}
+                    className={styles.card}
+                >
                     <h3 className={styles.title}>{product.name}</h3>
 
                     <div className={styles.imageWrapper}>
@@ -23,7 +28,7 @@ export function ProductList({ products }: Props) {
                             className={styles.image}
                         />
                     </div>
-                </div>
+                </Link>
             ))}
         </div>
     );
