@@ -12,8 +12,8 @@ export function ProductList({ products }: Props) {
     return (
         <div className={styles.grid}>
             {products.map((product) => (
-                <Link 
-                    href={`/menu/${product.id}`} 
+                <Link
+                    href={`/menu/${product.id}`}
                     key={product.id}
                     className={styles.card}
                 >
