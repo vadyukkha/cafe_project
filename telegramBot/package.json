@@ -1,0 +1,33 @@
+{
+  "name": "coffee-shop-telegram-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot for coffee shop application",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "clean": "rm -rf dist",
+    "build:clean": "npm run clean && npm run build",
+    "lint": "eslint src --ext .ts",
+    "test": "echo \"No tests yet\""
+  },
+  "dependencies": {
+    "telegraf": "^4.16.3",
+    "dotenv": "^16.3.1",
+    "qrcode": "^1.5.3",
+    "node-cache": "^5.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@types/qrcode": "^1.5.2",
+    "@types/node-cache": "^5.1.3",
+    "typescript": "^5.2.2",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1"
+  },
+  "keywords": ["telegram", "bot", "coffee-shop", "telegraf"],
+  "author": "Your Name",
+  "license": "MIT"
+}
