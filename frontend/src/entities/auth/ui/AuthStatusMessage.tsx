@@ -1,9 +1,9 @@
 interface AuthStatusMessageProps {
-  error: string;
+    error: string;
 }
 
 export function AuthStatusMessage({ error }: AuthStatusMessageProps) {
-  return error ? (
-    <p style={{ color: "red", marginTop: 10 }}>{error}</p>
-  ) : null;
+    return error ? (
+        <p style={{ color: "red", marginTop: 10 }}>{error}</p>
+    ) : null;
 }

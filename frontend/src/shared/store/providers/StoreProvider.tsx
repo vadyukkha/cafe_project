@@ -1,22 +1,25 @@
 "use client";
 
 import { Provider } from "react-redux";
-import { store } from "@/src/shared/store/store";
-import { useEffect } from "react";
-import { setInitialAuth } from "@/src/entities/auth/model/authSlice";
+import { ReactNode, useRef } from "react";
+import { makeStore, AppStore } from "../store";
 
-export function StoreProvider({
-  children,
-  initialAuth,
-}: {
-  children: React.ReactNode;
-  initialAuth: boolean;
-}) {
-  useEffect(() => {
-    if (initialAuth !== undefined) {
-      store.dispatch(setInitialAuth(initialAuth));
+interface StoreProviderProps {
+    children: ReactNode;
+    initialAuth: boolean;
+}
+
+export function StoreProvider({ children, initialAuth }: StoreProviderProps) {
+    const storeRef = useRef<AppStore | null>(null);
+
+    if (!storeRef.current) {
+        storeRef.current = makeStore({
+            auth: {
+                accessToken: initialAuth ? "SSR_TOKEN_PLACEHOLDER" : null,
+                isAuthenticated: initialAuth,
+            },
+        });
     }
-  }, [initialAuth]);
 
-  return <Provider store={store}>{children}</Provider>;
+    return <Provider store={storeRef.current!}>{children}</Provider>;
 }

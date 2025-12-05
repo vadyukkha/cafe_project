@@ -2,15 +2,15 @@ import { Product } from "@/src/entities/product/model/types";
 import { ProductList } from "@/src/entities/product/ui/ProductList";
 
 interface Props {
-  products: Product[];
+    products: Product[];
 }
 
 export function MenuSection({ products }: Props) {
-  return (
-    <section className="space-y-8 py-4">
-      <h1 className="text-3xl font-bold" style={{ marginLeft: '20px' }}>Наш кофе</h1>
+    return (
+        <section className="space-y-8 py-4">
+            <h1 className="text-3xl font-bold" style={{ marginLeft: '20px' }}>Наш кофе</h1>
 
-      <ProductList products={products} />
-    </section>
-  );
+            <ProductList products={products} />
+        </section>
+    );
 }

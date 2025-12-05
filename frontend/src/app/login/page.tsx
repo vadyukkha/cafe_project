@@ -23,8 +23,7 @@ export default function LoginPage() {
                 return;
             }
 
-            dispatch(setCredentials({ accessToken: result.access_token }));
-
+            dispatch(setCredentials(result.access_token as string));
             document.cookie = `auth_token=${result.access_token}; ` +
                 `path=/; ` +
                 `max-age=31536000; ` +

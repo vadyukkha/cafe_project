@@ -1,12 +1,12 @@
 export interface Product {
-  id: string
-  name: string
-  description: string
-  price: number
-  volume: number
+    id: string
+    name: string
+    description: string
+    price: number
+    volume: number
 }
 
 export interface ApiResponse {
-  status: number
-  products: Product[]
+    status: number
+    products: Product[]
 }
