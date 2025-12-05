@@ -1,8 +1,10 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "@/src/entities/auth/model/authSlice";
+import cartReducer from "@/src/entities/cart/model/cartSlice";
 
 const rootReducer = combineReducers({
     auth: authReducer,
+    cart: cartReducer,
 });
 
 export function makeStore(preloadedState?: Partial<RootState>) {

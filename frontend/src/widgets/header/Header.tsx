@@ -7,6 +7,7 @@ import styles from "./Header.module.css";
 
 export function Header() {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    const cartTotalItems = useSelector((state: RootState) => state.cart.totalItems);
 
     return (
         <header className={styles.header}>
@@ -19,7 +20,12 @@ export function Header() {
             </nav>
 
             <div className={styles.right}>
-                <Link href="/cart" className={styles.cartButton}>Корзина</Link>
+                <Link href="/cart" className={styles.cartButton}>
+                    Корзина
+                    {cartTotalItems > 0 && (
+                        <span className={styles.cartBadge}>{cartTotalItems}</span>
+                    )}
+                </Link>
 
                 {isAuthenticated ? (
                     <Link href="/me" className={styles.authButton}>Профиль</Link>
