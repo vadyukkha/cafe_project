@@ -13,9 +13,14 @@ export function UserProfile({ user }: { user: User }) {
 
         if (typeof window !== "undefined") {
             localStorage.removeItem("access_token");
+            document.cookie = `auth_token=; path=/; max-age=0; Secure=${process.env.NODE_ENV === "production"}; SameSite=Lax`;
             window.location.href = "/login";
         }
     };
+
+    const handleTelegram = () => {
+        window.location.href = `https://t.me/skufatorr_coffee_bot?start=${user.id}`
+    }
 
     return (
         <div className={styles.wrapper}>
@@ -41,6 +46,10 @@ export function UserProfile({ user }: { user: User }) {
                 <b>Аккаунт создан:</b>{" "}
                 {new Date(user.createdAt).toLocaleDateString("ru-RU")}
             </div>
+
+            <button className={styles.logoutButton} onClick={handleTelegram}>
+                Карта лояльности
+            </button>
 
             <button className={styles.logoutButton} onClick={handleLogout}>
                 Выйти
