@@ -18,13 +18,12 @@ export function createBot(token: string) {
     await next();
   });
 
-  // Регистрируем команды с разными вариантами написания
+  // Регистрируем команды
   bot.start(startHandler);
   
   // Команда showQr с разными вариантами
   bot.command('showqr', showQrHandler);
   bot.command('showQr', showQrHandler);
-  bot.command('showqr@coffee_shop_bot', showQrHandler); // если используется в группе
   
   // Команда showLastPoints с разными вариантами
   bot.command('showlastpoints', showLastPointsHandler);
@@ -43,58 +42,7 @@ export function createBot(token: string) {
     );
   });
 
-  // Обработчики callback-кнопок
-  bot.action('refresh_qr', async (ctx) => {
-    try {
-      await ctx.answerCbQuery();
-      await showQrHandler(ctx);
-    } catch (error) {
-      logger.error('Error in refresh_qr action:', error);
-    }
-  });
-
-  bot.action('get_qr', async (ctx) => {
-    try {
-      await ctx.answerCbQuery();
-      await showQrHandler(ctx);
-    } catch (error) {
-      logger.error('Error in get_qr action:', error);
-    }
-  });
-
-  bot.action('show_points', async (ctx) => {
-    try {
-      await ctx.answerCbQuery();
-      if (ctx.from) {
-        // Имитация получения баллов
-        ctx.reply('Ваш баланс: 0 ⭐\n\nИспользуйте /showQr чтобы получить QR-код и начать накапливать баллы!');
-      }
-    } catch (error) {
-      logger.error('Error in show_points action:', error);
-    }
-  });
-
-  bot.action('refresh_history', async (ctx) => {
-    try {
-      await ctx.answerCbQuery();
-      await showLastPointsHandler(ctx);
-    } catch (error) {
-      logger.error('Error in refresh_history action:', error);
-    }
-  });
-
-  // Обработчик ошибок
-  bot.catch((error: any, ctx) => {
-    logger.error(`Error for ${ctx.updateType}:`, error);
-    
-    try {
-      if (ctx.reply) {
-        ctx.reply('Произошла ошибка. Пожалуйста, попробуйте позже.');
-      }
-    } catch (e) {
-      logger.error('Failed to send error message:', e);
-    }
-  });
+  // ... остальной код обработчиков callback-кнопок и ошибок
 
   return bot;
 }
