@@ -1,5 +1,5 @@
 {
-  "name": "coffee-shop-telegram-bot",
+  "name": "telegram-bot",
   "version": "1.0.0",
   "description": "Telegram bot for coffee shop application",
   "type": "commonjs",
