@@ -13,7 +13,7 @@ export function ProductList({ products }: Props) {
         <div className={styles.grid}>
             {products.map((product) => (
                 <Link 
-                    href={`/product/${product.id}`} 
+                    href={`/menu/${product.id}`} 
                     key={product.id}
                     className={styles.card}
                 >
