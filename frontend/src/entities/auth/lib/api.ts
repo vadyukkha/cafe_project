@@ -1,4 +1,4 @@
-import { RegisterRequest, RegisterResponse, LoginResponse } from '../model/types';
+import { LoginResponse, RegisterRequest, RegisterResponse } from '../model/types';
 
 export const registerUser = async (req: RegisterRequest):
     Promise<{ success: boolean; message?: string }> => {
@@ -19,14 +19,12 @@ export const registerUser = async (req: RegisterRequest):
     }
 };
 
-export const loginUser = async (
-    email: string,
-    password: string
-): Promise<{ success: boolean; access_token?: string; message?: string }> => {
+export const loginUser = async (email: string, password: string):
+    Promise<{ success: boolean; access_token?: string; message?: string }> => {
     try {
-        const res = await fetch("http://localhost:3000/api/v1/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+        const res = await fetch('http://localhost:3000/api/v1/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
         });
 
@@ -38,6 +36,25 @@ export const loginUser = async (
             message: data.message,
         };
     } catch (error) {
-        return { success: false, message: "Ошибка сервера" };
+        return { success: false, message: 'Ошибка сервера' };
     }
 };
+
+export async function fetchMe(token: string) {
+    try {
+        const response = await fetch('http://localhost:3000/api/v1/auth/me', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            cache: 'no-store',
+        });
+
+        if (!response.ok) {
+            throw new Error('Не удалось загрузить профиль');
+        }
+
+        return response.json();
+    } catch (error) {
+        return { success: false, message: 'Ошибка сервера' };
+    }
+}

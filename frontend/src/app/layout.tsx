@@ -6,13 +6,12 @@ import { cookies } from "next/headers";
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const cookieStore = await cookies();
-    const authToken = cookieStore.get("auth_token");
-    const isAuthenticated = !!authToken;
+    const authToken = cookieStore.get("auth_token")?.value ?? null;
 
     return (
         <html lang="ru">
             <body style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-                <StoreProvider initialAuth={isAuthenticated}>
+                <StoreProvider initialToken={authToken}>
                     <Header />
                     <main style={{ flex: 1 }}>{children}</main>
                     <Footer />
