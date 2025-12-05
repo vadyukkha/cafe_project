@@ -3,6 +3,7 @@ import { logger } from './utils/logger';
 import { startHandler } from './handlers/start';
 import { showQrHandler } from './handlers/showQr';
 import { showLastPointsHandler } from './handlers/showLastPoints';
+import { PointsService } from './services/pointsService';
 
 export function createBot(token: string) {
   const bot = new Telegraf(token);
@@ -42,7 +43,28 @@ export function createBot(token: string) {
     );
   });
 
-  // ... остальной код обработчиков callback-кнопок и ошибок
+  // Обработчики callback-кнопок
+  bot.action('refresh_qr', async (ctx) => {
+    await ctx.answerCbQuery('Обновляем QR-код...');
+    await showQrHandler(ctx);
+  });
+
+  bot.action('get_qr', async (ctx) => {
+    await ctx.answerCbQuery();
+    await showQrHandler(ctx);
+  });
+
+  bot.action('show_points', async (ctx) => {
+    if (!ctx.from) return;
+    await ctx.answerCbQuery();
+    const points = await PointsService.getPoints(ctx.from.id);
+    await ctx.reply(`Ваш баланс: ${points} ⭐`);
+  });
+
+  bot.action('refresh_history', async (ctx) => {
+    await ctx.answerCbQuery('Обновляем историю...');
+    await showLastPointsHandler(ctx);
+  });
 
   return bot;
 }

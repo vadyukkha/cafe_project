@@ -12,46 +12,15 @@ export async function showLastPointsHandler(ctx: Context): Promise<void> {
     const history = await PointsService.getPurchaseHistory(ctx.from.id, 10);
     const totalPoints = await PointsService.getPoints(ctx.from.id);
 
-    if (history.length === 0) {
-      await ctx.reply(`
-📭 История начислений пуста
-
-У вас еще нет ни одной покупки с начислением баллов.
+    await ctx.reply(`
+Ваш баланс: ${totalPoints} ⭐
 
 Как получить баллы:
 1. Используйте команду /showQr чтобы получить QR-код
 2. Покажите QR-код на кассе при оплате
 3. Баллы будут начислены автоматически!
-
-Ваш баланс: ${totalPoints} ⭐
-      `.trim());
-      return;
-    }
-
-    let historyText = `📊 История начислений\n\n`;
-    
-    history.forEach((purchase, index) => {
-      const date = new Date(purchase.createdAt).toLocaleDateString('ru-RU', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-      
-      historyText += `${index + 1}. ${date}\n`;
-      historyText += `   ⭐ +${purchase.pointsEarned} баллов\n`;
-      
-      if (purchase.description) {
-        historyText += `   📝 ${purchase.description}\n`;
-      }
-      
-      historyText += '\n';
-    });
-
-    historyText += `\n💎 Всего баллов: ${totalPoints} ⭐`;
-
-    await ctx.reply(historyText, {
+      `.trim(),
+      {
       reply_markup: {
         inline_keyboard: [
           [
@@ -66,8 +35,8 @@ export async function showLastPointsHandler(ctx: Context): Promise<void> {
           ]
         ]
       }
-    });
-
+    }
+);
     logger.info(`History shown for user ${ctx.from.id}, ${history.length} records`);
 
   } catch (error) {

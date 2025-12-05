@@ -9,36 +9,36 @@ export async function startHandler(ctx: Context): Promise<void> {
       return;
     }
 
-    // Проверяем, что message существует и имеет свойство text
+    // Получаем имя пользователя из Telegram
+    const userName = getUserNameFromContext(ctx);
+    
+    // Получаем или создаем пользователя с реальным именем
+    const user = await PointsService.getOrCreateUser(ctx.from.id, userName);
+    const points = await PointsService.getPoints(ctx.from.id);
+
+    // Получаем параметр из deep link (t.me/bot?start=параметр)
     let payload = '';
     if (ctx.message && 'text' in ctx.message) {
-      // Получаем параметр из deep link (t.me/bot?start=параметр)
       const parts = ctx.message.text.split(' ');
       if (parts.length > 1) {
         payload = parts[1];
       }
     }
     
-    logger.info(`Start command from user ${ctx.from.id} with payload: ${payload}`);
-
-    const user = await PointsService.getUser(ctx.from.id);
-    const points = await PointsService.getPoints(ctx.from.id);
-
-    // Используем имя из Telegram или дефолтное
-    const userName = ctx.from.first_name || ctx.from.username || user.name;
+    logger.info(`Start command from user ${ctx.from.id} (${userName}) with payload: ${payload}`);
 
     let welcomeMessage = `☕ Добро пожаловать в нашу кофейню!\n\nПривет, ${userName}! Рады видеть вас в нашем приложении.\n\n`;
 
     // Если есть параметр, обрабатываем его
     if (payload) {
-      // await handleStartPayload(ctx.from.id, payload);
+      // Здесь можно добавить обработку payload
       welcomeMessage += `🔗 Вы перешли по специальной ссылке с параметром: ${payload}\n\n`;
     }
 
     welcomeMessage += `Ваши текущие баллы: ${points} ⭐\n\nДоступные команды:\n/showQr - Получить QR-код для начисления баллов\n/showLastPoints - История начислений\n/help - Помощь по командам\n\nКак это работает:\n1. Покажите QR-код на кассе\n2. Получайте баллы за покупки\n3. Обменивайте баллы на напитки!\n\nЖелаем вам приятного кофе! ☕`;
 
     await ctx.reply(welcomeMessage);
-    logger.info(`Start command executed for user ${ctx.from.id}`);
+    logger.info(`Start command executed for user ${ctx.from.id} (${userName})`);
 
   } catch (error) {
     logger.error('Error in start handler:', error);
@@ -50,20 +50,27 @@ export async function startHandler(ctx: Context): Promise<void> {
   }
 }
 
-// Функция обработки параметров из deep link
-async function handleStartPayload(userId: number, payload: string): Promise<void> {
-  try {
-    logger.info(`Processing start payload for user ${userId}: ${payload}`);
-    // Обработка числового ID
-    await handleUserIdParam(userId, payload);
-  } catch (error) {
-    logger.error('Error handling start payload:', error);
+// Функция для получения имени пользователя из контекста
+function getUserNameFromContext(ctx: Context): string {
+  if (!ctx.from) {
+    return 'Гость';
   }
-}
-
-async function handleUserIdParam(userId: number, param: string): Promise<void> {
-  logger.info(`User ${userId} started with user ID param: ${param}`);
   
-  // Можно сохранить связь между пользователями
-  // или выполнить другую логику
+  const { first_name, last_name, username } = ctx.from;
+  
+  // Формируем имя в порядке приоритета:
+  // 1. Имя и фамилия
+  // 2. Только имя
+  // 3. Username
+  // 4. ID пользователя
+  
+  if (first_name && last_name) {
+    return `${first_name} ${last_name}`;
+  } else if (first_name) {
+    return first_name;
+  } else if (username) {
+    return `@${username}`;
+  } else {
+    return `User_${ctx.from.id}`;
+  }
 }
