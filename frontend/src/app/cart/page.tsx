@@ -3,21 +3,41 @@
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { RootState } from "@/src/shared/store/store";
-import { 
-    removeFromCart, 
-    incrementQuantity, 
-    decrementQuantity, 
-    clearCart 
+import {
+    removeFromCart,
+    incrementQuantity,
+    decrementQuantity,
+    clearCart,
+    setCart,
+    loadCartFromLocalStorage
 } from "@/src/entities/cart/model/cartSlice";
 import coffeePNG from "@/public/coffee.png";
 import styles from "./page.module.css";
 
 export default function CartPage() {
     const dispatch = useDispatch();
-    const { items, totalPrice, totalItems } = useSelector((state: RootState) => state.cart);
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    const cart = useSelector((state: RootState) => state.cart);
+    const { items, totalPrice, totalItems } = cart;
 
+    const [mounted, setMounted] = useState(false);
+
+    // Загружаем корзину из localStorage только на клиенте
+    useEffect(() => {
+        setMounted(true);
+
+        if (typeof window !== "undefined") {
+            const savedCart = loadCartFromLocalStorage();
+            dispatch(setCart(savedCart));
+        }
+    }, [dispatch]);
+
+    // Ждём гидрацию
+    if (!mounted) return null;
+
+    // Если не авторизован
     if (!isAuthenticated) {
         return (
             <div className={styles.container}>
@@ -32,6 +52,7 @@ export default function CartPage() {
         );
     }
 
+    // Если корзина пуста
     if (items.length === 0) {
         return (
             <div className={styles.container}>
@@ -50,7 +71,7 @@ export default function CartPage() {
         <div className={styles.container}>
             <div className={styles.header}>
                 <h1>Корзина</h1>
-                <button 
+                <button
                     onClick={() => dispatch(clearCart())}
                     className={styles.clearButton}
                 >
@@ -71,29 +92,29 @@ export default function CartPage() {
                                     style={{ objectFit: "cover" }}
                                 />
                             </div>
-                            
+
                             <div className={styles.itemInfo}>
                                 <h3 className={styles.itemName}>{item.name}</h3>
                                 <p className={styles.itemDescription}>{item.description}</p>
                                 <div className={styles.itemVolume}>{item.volume} мл.</div>
                             </div>
-                            
+
                             <div className={styles.quantityControls}>
-                                <button 
+                                <button
                                     onClick={() => dispatch(decrementQuantity(item.id))}
                                     className={styles.quantityButton}
                                 >
                                     -
                                 </button>
                                 <span className={styles.quantity}>{item.quantity}</span>
-                                <button 
+                                <button
                                     onClick={() => dispatch(incrementQuantity(item.id))}
                                     className={styles.quantityButton}
                                 >
                                     +
                                 </button>
                             </div>
-                            
+
                             <div className={styles.itemPrice}>
                                 <div className={styles.pricePerItem}>
                                     {item.price} ₽ × {item.quantity}
@@ -102,8 +123,8 @@ export default function CartPage() {
                                     {item.price * item.quantity} ₽
                                 </div>
                             </div>
-                            
-                            <button 
+
+                            <button
                                 onClick={() => dispatch(removeFromCart(item.id))}
                                 className={styles.removeButton}
                             >
@@ -112,7 +133,7 @@ export default function CartPage() {
                         </div>
                     ))}
                 </div>
-                
+
                 <div className={styles.summary}>
                     <h2>Итого</h2>
                     <div className={styles.summaryRow}>
@@ -127,11 +148,11 @@ export default function CartPage() {
                         <span>Общая сумма</span>
                         <span className={styles.totalPrice}>{totalPrice} ₽</span>
                     </div>
-                    
+
                     <button className={styles.checkoutButton}>
                         Перейти к оформлению
                     </button>
-                    
+
                     <Link href="/menu" className={styles.continueShopping}>
                         ← Продолжить покупки
                     </Link>

@@ -4,10 +4,19 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import { RootState } from "@/src/shared/store/store";
 import styles from "./Header.module.css";
+import { useEffect, useState } from "react";
 
 export function Header() {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const cartTotalItems = useSelector((state: RootState) => state.cart.totalItems);
+
+    if (!mounted) return null;
 
     return (
         <header className={styles.header}>

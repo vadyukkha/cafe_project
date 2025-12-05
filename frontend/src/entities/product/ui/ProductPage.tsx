@@ -14,10 +14,10 @@ export function ProductPageView({ product }: { product: Product }) {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const cartItems = useSelector((state: RootState) => state.cart.items);
-    
+
     const cartItem = cartItems.find(item => item.id === product.id);
-    const buttonText = cartItem 
-        ? `В корзине (${cartItem.quantity})` 
+    const buttonText = cartItem
+        ? `В корзине (${cartItem.quantity})`
         : "Добавить в корзину";
 
     const handleAddToCart = () => {
@@ -26,7 +26,7 @@ export function ProductPageView({ product }: { product: Product }) {
             router.push("/login");
             return;
         }
-        
+
         dispatch(addToCart(product));
     };
 
@@ -54,13 +54,13 @@ export function ProductPageView({ product }: { product: Product }) {
 
                     <div className={styles.price}>{product.price} ₽</div>
 
-                    <button 
+                    <button
                         onClick={handleAddToCart}
                         className={styles.button}
                     >
                         {isAuthenticated ? buttonText : "Войти для добавления"}
                     </button>
-                    
+
                     {!isAuthenticated && (
                         <p className={styles.authHint}>
                             Требуется авторизация для добавления товаров в корзину
