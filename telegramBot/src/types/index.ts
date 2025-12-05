@@ -8,15 +8,6 @@ export interface User {
   updatedAt: Date;
 }
 
-export interface Purchase {
-  id: number;
-  userId: number;
-  amount: number;
-  pointsEarned: number;
-  description?: string;
-  createdAt: Date;
-}
-
 export interface BotContext {
   user?: User;
   session?: any;

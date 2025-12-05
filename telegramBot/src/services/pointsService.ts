@@ -1,10 +1,8 @@
 import { cache } from '../utils/cache';
 import { logger } from '../utils/logger';
-import { User, Purchase } from '../types';
+import { User } from '../types';
 
 export class PointsService {
-  private static readonly POINTS_PER_PURCHASE = 10;
-
   // Метод для получения или создания пользователя
   static async getOrCreateUser(
     telegramId: number, 
@@ -61,20 +59,6 @@ export class PointsService {
     
     cache.set(`user_${telegramId}`, user);
     
-    // Сохраняем покупку в историю
-    const purchase: Purchase = {
-      id: Date.now(),
-      userId: user.id,
-      amount: points,
-      pointsEarned: points,
-      description,
-      createdAt: new Date()
-    };
-    
-    const history = cache.get<Purchase[]>(`history_${telegramId}`) || [];
-    history.push(purchase);
-    cache.set(`history_${telegramId}`, history, 86400); // 24 часа
-    
     logger.info(`Points added: ${points} to user ${telegramId} (${user.name})`);
     return user;
   }
@@ -82,24 +66,6 @@ export class PointsService {
   static async getPoints(telegramId: number): Promise<number> {
     const user = await this.getUser(telegramId);
     return user ? user.points : 0;
-  }
-
-  static async getPurchaseHistory(
-    telegramId: number, 
-    limit: number = 5
-  ): Promise<Purchase[]> {
-    const history = cache.get<Purchase[]>(`history_${telegramId}`) || [];
-    return history.slice(-limit).reverse();
-  }
-
-  static async processPurchase(
-    telegramId: number, 
-    amount: number
-  ): Promise<{ user: User; pointsEarned: number }> {
-    const pointsEarned = Math.floor(amount / 100) * this.POINTS_PER_PURCHASE;
-    const user = await this.addPoints(telegramId, pointsEarned, `Purchase of ${amount} RUB`);
-    
-    return { user, pointsEarned };
   }
 
   // Метод для обновления данных пользователя
