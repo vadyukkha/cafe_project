@@ -1,3 +1,4 @@
-export * from './start';
-export * from './showQr';
-export * from './showLastPoints';
+// Реэкспорт всех хендлеров
+export { startHandler } from './start';
+export { showQrHandler } from './showQr';
+export { showLastPointsHandler } from './showLastPoints';
