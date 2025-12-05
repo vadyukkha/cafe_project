@@ -1,10 +1,8 @@
-import { Role } from "@/src/shared/enums/role";
+import { Role } from '@/src/shared/enums/role';
 
 export interface RegisterResponse {
     message: string;
-    user?: {
-        id: string;
-    }
+    user?: { id: string; }
 }
 
 export interface RegisterRequest {
@@ -25,4 +23,9 @@ export interface User {
     password: string;
     role: Role;
     createdAt: Date;
+}
+
+export interface UserResponse {
+    message: string;
+    user: User;
 }

@@ -33,6 +33,15 @@ export function UserProfile({ user }: { user: User }) {
                 <b>Email:</b> {user.email}
             </div>
 
+            <div className={styles.row}>
+                <b>Роль:</b> {user.role}
+            </div>
+
+            <div className={styles.row}>
+                <b>Аккаунт создан:</b>{" "}
+                {new Date(user.createdAt).toLocaleDateString("ru-RU")}
+            </div>
+
             <button className={styles.logoutButton} onClick={handleLogout}>
                 Выйти
             </button>
