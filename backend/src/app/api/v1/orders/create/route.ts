@@ -40,16 +40,16 @@ export async function POST(request: Request) {
 
 		const userId = request.headers.get('x-user-id') as string
 
-        const draftToken = uuidv4()
+		const draftToken = uuidv4()
 
 		await prisma.order.create({
 			data: {
-                draftToken,
-                userId, 
-                status: OrderStatus.PENDING,
-                total,
-                items: { create: orderItems } 
-            },
+				draftToken,
+				userId,
+				status: OrderStatus.PENDING,
+				total,
+				items: { create: orderItems }
+			},
 			include: { items: true }
 		})
 

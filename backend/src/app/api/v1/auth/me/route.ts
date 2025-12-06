@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
 	const userId = request.headers.get('x-user-id') as string
-	if (!userId) { 
-		return NextResponse.json({ message: 'Unauthorized request' }, { status: 401 }) 
+	if (!userId) {
+		return NextResponse.json({ message: 'Unauthorized request' }, { status: 401 })
 	}
 
 	const user = await prisma.user.findUnique({
