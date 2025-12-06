@@ -1,0 +1,78 @@
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 20px 40px;
+  border-bottom: 1px solid #eee;
+
+  font-family: sans-serif;
+}
+
+.left {
+  font-weight: bold;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #000;
+  letter-spacing: 1px;
+}
+
+.nav {
+  display: flex;
+  gap: 40px;
+}
+
+.nav a {
+  font-size: 18px;
+  text-decoration: none;
+  color: #222;
+  transition: opacity 0.2s ease;
+}
+
+.nav a:hover {
+  opacity: 0.6;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.cartButton {
+  padding: 8px 18px;
+  border: 1px solid #000;
+  border-radius: 6px;
+
+  text-decoration: none;
+  font-size: 16px;
+  color: #000;
+
+  transition: all 0.2s ease;
+}
+.cartButton:hover {
+  background: #000;
+  color: #fff;
+}
+
+.authButton {
+  padding: 8px 18px;
+  border: 1px solid #000;
+  border-radius: 6px;
+
+  text-decoration: none;
+  font-size: 16px;
+  color: #000;
+
+  transition: all 0.2s ease;
+}
+
+.authButton:hover {
+  background: #000;
+  color: #fff;
+}
