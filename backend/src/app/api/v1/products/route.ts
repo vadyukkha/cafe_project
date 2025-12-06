@@ -1,4 +1,4 @@
-import { createProductSchema } from '@/app/schemas/product';
+import { createProductSchema } from '@/src/schemas/product';
 import { prisma } from '@/prisma/connection';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';

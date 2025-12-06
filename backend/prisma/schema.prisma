@@ -27,14 +27,15 @@ enum Status {
 }
 
 model User {
-  id         String      @id @default(uuid())
-  email      String      @unique
-  name       String
-  password   String // hashed
-  role       Role        @default(USER)
-  createdAt  DateTime    @default(now())
-  orders     Order[]
-  orderItems OrderItem[]
+  id           String        @id @default(uuid())
+  email        String        @unique
+  name         String
+  password     String // hashed
+  role         Role          @default(USER)
+  createdAt    DateTime      @default(now())
+  orders       Order[]
+  orderItems   OrderItem[]
+  loyaltyCards LoyaltyCard[]
 
   @@map("users")
 }
@@ -76,4 +77,15 @@ model OrderItem {
   orderId   String?
 
   @@map("orderItems")
+}
+
+model LoyaltyCard {
+  id         String   @id @default(uuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  telegramId String   @unique
+  amount     Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  @@map("loyaltyCards")
 }

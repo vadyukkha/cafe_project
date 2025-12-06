@@ -1,9 +1,10 @@
-import { loginSchema } from '@/app/schemas/login'
-import { signJwt } from '@/app/utils/jwt'
+import { loginSchema } from '@/src/schemas/login'
+import { signJwt } from '@/src/utils/jwt'
 import { prisma } from '@/prisma/connection'
 import bcrypt from 'bcryptjs'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
+import { Role } from '@/src/enums/role'
 
 
 export async function POST(request: Request) {
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
 		const access_token = signJwt({
 			id: user.id,
 			email: user.email,
-			role: user.role,
+			role: user.role as Role,
 		})
 
 		return NextResponse.json(

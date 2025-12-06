@@ -1,5 +1,5 @@
-import { registerSchema } from '@/app/schemas/register'
-import { Role } from '@/app/enums/role'
+import { registerSchema } from '@/src/schemas/register'
+import { Role } from '@/src/enums/role'
 import { prisma } from '@/prisma/connection'
 import bcrypt from 'bcryptjs'
 import { NextResponse } from 'next/server'
