@@ -11,7 +11,7 @@ const eslintConfig = defineConfig([
     '.next/**',
     'node_modules/**',
     'prisma/generated/**',
-    'app/enums/**',
+    'src/enums/**',
     'out/**',
     'build/**',
     'next-env.d.ts',
@@ -38,6 +38,7 @@ const eslintConfig = defineConfig([
         }
       ],
       'no-empty': ['error', { allowEmptyCatch: true }],
+      "semi": ["error", "always"]
     }
   }
 ]);

@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/prisma/connection'
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/prisma/connection';
 
 export async function GET(request: NextRequest) {
 	try {
@@ -104,9 +104,9 @@ export async function PUT(request: NextRequest) {
 			);
 		}
 
-		const userId = request.headers.get('x-user-id') as string
+		const userId = request.headers.get('x-user-id') as string;
 		if (!userId) {
-			return NextResponse.json({ message: 'Unauthorized request' }, { status: 401 })
+			return NextResponse.json({ message: 'Unauthorized request' }, { status: 401 });
 		}
 
 		if (card.userId && card.userId !== userId) {

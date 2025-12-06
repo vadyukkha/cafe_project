@@ -52,10 +52,10 @@ export async function PUT(
 
 		if (parsed.data.description) {
 			parsed.data.description =
-				capitalizeFirstLetter(parsed.data.description.toLowerCase())
+				capitalizeFirstLetter(parsed.data.description.toLowerCase());
 		}
 		if (parsed.data.name) {
-			parsed.data.name = parsed.data.name.toLowerCase()
+			parsed.data.name = parsed.data.name.toLowerCase();
 		}
 
 		const updated = await prisma.product.update({
@@ -88,7 +88,7 @@ export async function DELETE(
 
 		return NextResponse.json({ message: 'Product deleted' }, { status: 200 });
 	} catch (error) {
-		console.log(error)
+		console.log(error);
 		return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
 	}
 }
