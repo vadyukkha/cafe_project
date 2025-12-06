@@ -1,13 +1,15 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { verifyJwt } from '@/app/utils/jwt'
-import { JwtPayload } from '@/app/types/token'
+import { verifyJwt } from '@/src/utils/jwt'
+import { JwtPayload } from '@/src/types/token'
+import { headers } from 'next/headers'
 
 const prefix = '/api/v1'
 const publicRoutes = [
 	prefix + '/orders',
 	prefix + '/products',
-	prefix + '/auth',
+	prefix + '/auth/login',
+	prefix + '/auth/register',
 	prefix + '/health_check',
 ]
 
@@ -58,7 +60,6 @@ export async function proxy(request: NextRequest) {
 		const res = NextResponse.json({ error: 'Invalid or expired token' }, { status: 401 })
 		return setCorsHeaders(res, origin)
 	}
-
 	const requestHeaders = new Headers(request.headers)
 	if (payload.id) requestHeaders.set('x-user-id', String(payload.id))
 	if (payload.email) requestHeaders.set('x-user-email', String(payload.email))

@@ -1,4 +1,4 @@
-import { JwtPayload } from '@/app/types/token'
+import { JwtPayload } from '@/src/types/token'
 import jwt from 'jsonwebtoken'
 
 export function signJwt(payload: JwtPayload) {

@@ -1,4 +1,4 @@
-import { OrderStatus } from '@/app/enums/order_status'
+import { OrderStatus } from '@/src/enums/order_status'
 import { prisma } from '@/prisma/connection'
 import { NextResponse } from 'next/server'
 

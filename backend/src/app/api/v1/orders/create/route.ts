@@ -1,5 +1,5 @@
-import { OrderStatus } from '@/app/enums/order_status'
-import { createOrderSchema } from '@/app/schemas/order'
+import { OrderStatus } from '@/src/enums/order_status'
+import { createOrderSchema } from '@/src/schemas/order'
 import { prisma } from '@/prisma/connection'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
