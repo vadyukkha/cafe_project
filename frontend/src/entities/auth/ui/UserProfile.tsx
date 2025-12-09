@@ -1,6 +1,7 @@
 "use client";
 
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 import { setAuthenticated } from "../model/authSlice";
 import { LoyaltyCard, User } from "../model/types";
 import styles from "./UserProfile.module.css";
@@ -8,7 +9,7 @@ import { logoutUser } from "../lib/api";
 
 export function UserProfile({ user, card }: { user: User, card: LoyaltyCard | null }) {
     const dispatch = useDispatch();
-
+    const router = useRouter()
     const handleLogout = async () => {
         dispatch(setAuthenticated(false));
         try {
@@ -27,6 +28,10 @@ export function UserProfile({ user, card }: { user: User, card: LoyaltyCard | nu
             '_blank',
             'noopener,noreferrer'
         );
+    };
+    
+    const handleAdminPanel = () => {
+        router.push("/admin");
     };
 
     return (
@@ -53,6 +58,12 @@ export function UserProfile({ user, card }: { user: User, card: LoyaltyCard | nu
                     </button>
                 )}
             </div>
+
+            {user.role === 'ADMIN' && (
+                <button className={styles.logoutButton} onClick={handleAdminPanel}>
+                    Admin panel
+                </button>
+            )}
 
             <button className={styles.logoutButton} onClick={handleLogout}>
                 Выйти
