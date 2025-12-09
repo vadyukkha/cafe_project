@@ -47,7 +47,6 @@ export async function POST(request: Request) {
 		const response = NextResponse.json(
 			{
 				message: 'Login successfully.',
-				role: user.role
 			}, { status: 200 }
 		);
 
