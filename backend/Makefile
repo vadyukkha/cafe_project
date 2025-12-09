@@ -1,6 +1,6 @@
-ifneq ("$(wildcard .env)","")
-	include .docker.env
-endif
+include .env
+include .docker.env
+export
 
 args := $(wordlist 2, 100, $(MAKECMDGOALS))
 ifndef args
